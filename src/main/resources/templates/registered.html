@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta content="中国加盟网,注册页面" name="keywords">
+	<meta content="中国加盟网个人中心注册页面。" name="description">
+	<title>个人中心--注册</title>
+	<link rel="stylesheet" th:href="@{css/reset.css}" />
+	<link rel="stylesheet" th:href="@{css/style.css}" />
+	<link rel="stylesheet" th:href="@{resources/layui/2.4.5/css/layui.css}" />
+	<link rel="stylesheet" th:href="@{resources/layui/2.4.5/css/modules/layer/default/layer.css}" />
+	<script type="text/javascript" th:src="@{resources/layui/2.4.5/layui.js}" ></script>
+	<script type="text/javascript" th:src="@{resources/layui/2.4.5/lay/modules/layer.js}" ></script>
+	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
+
+</head>
+<body>
+	<div class="mainBody"> 
+		<div class="autoWidth clear"> 
+			<div class="logo fl"> 
+<!--				<p class="title fl">账号注册</p>-->
+			</div>
+			<div class="freeConsultation fr"> 
+				<a href="/" class="return">返回首页</a>
+			</div>
+		</div>
+		<!-- 登录框 -->
+		<div class="loginBox"> 
+			<div class="loginBoxOne"> 
+				<p class="title">账号注册</p>
+				<form id="registration_information" action="/addUser" method="post" autocomplete="off" >
+					<ul> 
+<!--						<li> -->
+<!--							<p class="formPhone clear">-->
+<!--								<input type="text" name="person_number" id="person_number" placeholder="手机号码" title="手机号码" class="fl" maxlength="11">-->
+<!--							</p>-->
+<!--						</li>-->
+						<li>
+							<p class="formPhone clear">
+								<input type="text" name="username" id="username" placeholder="用户名" title="用户名" class="fl" maxlength="11">
+							</p>
+						</li>
+						<li class="clear mt24"> 
+							<p class="formPhone yzm fl">
+								<input type="text" name="picture_yzm" id="picture_yzm" placeholder="图形验证码" title="图形验证码">
+							</p>
+							<p class="fl yzmNum">
+								<canvas id="canvas" width="100" height="43"></canvas>
+								<input type="hidden" id="canvas1" value="">
+							</p>
+							<p class="refresh fr" id="refresh">刷新</p>
+						</li>
+<!--						<li class="mt24"> -->
+<!--							<p class="formPhone dxin_yzm clear">-->
+<!--								<input type="text" name="send_code" id="send_code" placeholder="短信验证码" title="短信验证码" class="fl">-->
+<!--								<input type="button" value="获取验证码" class="getYzm fr" id="getYzm" onclick="sendemail()">-->
+<!--							</p>-->
+<!--						</li>-->
+						<li class="mt24">
+							<p class="formPhone clear">
+								<input type="text" name="email" id="email" placeholder="邮箱" title="邮箱" class="fl">
+							</p>
+						</li>
+						<li class="mt24">
+							<p class="formPhone dxin_yzm clear">
+								<input type="text" name="email_code" id="email_code" placeholder="邮箱验证码" title="邮箱验证码" class="fl">
+								<input type="button" value="获取验证码" class="getYzm fr" id="send-email-code" name="send-email-code">
+								<input type="hidden" id="emailTip" value="">
+							</p>
+						</li>
+						<li> 
+							<p class="formPhone password">
+								<input type="password" name="login_password" id="login_password" placeholder="设置登录密码" title="设置登录密码">
+							</p>
+						</li>
+						<li class="person_registered"> 
+							<input type="submit" value="注册" class="logImmediately" >
+						</li>
+					</ul>
+				</form>
+			</div>
+			<p class="notRegistered">
+				<span>已有账号，去</span>
+				<a href="/login">登录</a>
+			</p>
+		</div>
+		<!-- 底部版权信息 -->
+<!--		<div class="footer"> -->
+<!--			<p>Copyright©2004-2019 JMW.COM.CN. All Rights Reserved   北京天创时代信息技术有限公司  版权所有</p>-->
+<!--			<p class="icp clear"><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202006020700545" target="_blank"></a><font class="fl">京ICP证：040787号   京公海网安备案编号:1101084667</font></p>-->
+<!--		</div>-->
+	</div>
+	<script type="text/javascript" th:src="@{js/jquery.validate.js}"></script>
+	<script type="text/javascript" th:src="@{js/jquery.form.js}"></script>
+	<script type="text/javascript" th:src="@{js/yzm.js}"></script>
+	<script type="text/javascript"> 
+		$('.formPhone input:text,.formPhone input:password').focus(function(){
+			$(this).parents('.formPhone').css('border','1px solid #a1aed4')
+		});
+
+		//刷新图形验证码
+		function refresh(){
+			$("#tu_yzm").attr("src","../identifying_code.php?rand"+Math.random());
+			return false;
+		}
+		//获取验证码
+		var countdown=60; 
+		function sendemail()
+        {
+			var person_phone = $("#person_number").val();
+			var tuxing_yzm = $("#picture_yzm").val();
+			var myreg=/^1[3456789]\d{9}$/;  
+			if(!myreg.test(person_phone)) 
+            {
+                $('.wrongPass').remove();
+                $('.person_registered').before('<li class="wrongPass">手机号错误</li>');
+                return false;
+            }
+			if(tuxing_yzm=='')
+            {
+                $('.wrongPass').remove();
+                $('.person_registered').before('<li class="wrongPass">图形验证码为空</li>');
+                return false;
+            }
+			var obj = $("#getYzm");
+			$.ajax({
+                async:false,
+                type:'post',
+                url:"../send_code.php",
+                data:{telephone:person_phone,code:tuxing_yzm},
+                success:function(html)
+                {
+                    if(html == 7)
+                    {
+                        $('.wrongPass').remove();
+                        $('.person_registered').before('<li class="wrongPass">您好，24小时内已经向您的手机发送了7次验证短信（最多10次），还可以发送3次短信，30秒后可再次获取！</li>');
+                        return false;
+                    }
+                    else if(html == -1)
+                    {
+                        $('.wrongPass').remove();
+                        $('.person_registered').before('<li class="wrongPass">不能进行重复发送，请稍后再试！</li>');
+                        return false;
+                    }
+                    else if(html == -4)
+                    {
+                        $('.wrongPass').remove();
+                        $('.person_registered').before('<li class="wrongPass">您好，24小时内已经向你手机发送了3次验证短信，达到安全上限，请明天再试！</li>');
+                        return false;
+                    }
+                    else
+                    {
+                        tuxing_yzm="";
+                        settime(obj);<!-- 显示倒计时 -->
+                    }
+                }
+            })
+		}
+		function settime(obj)
+        {
+			if (countdown == 0) {
+				obj.attr('disabled',false); 
+				obj.val("重新发送");
+				countdown = 60; 
+				return;
+			} else {
+				obj.attr('disabled',true);
+				obj.val("(" + countdown + ")秒");
+				countdown--; 
+			}
+            setTimeout(function() { settime(obj) },1000);
+		}
+        //验证表单信息
+        $(function () {
+			var show_num = [];
+			draw(show_num,"canvas");
+			$("#canvas").on('click',function(){
+				draw(show_num,"canvas");
+			})
+			$("#refresh").on('click',function(){
+				draw(show_num,"canvas");
+			})
+            //自定义验证--手机号
+            $.validator.addMethod("isMobile",function(value,element){
+                var mobile = /^1[\d]{10}$/;
+                return this.optional(element) || mobile.test(value);
+            },"请输入正确的手机号");
+
+            $("#registration_information").validate({
+                rules: {
+                    // person_number:{
+                    //     required:true,
+                    //     maxlength:11,
+                    //     isMobile:true,
+					// 	remote: {
+                    //         url:'../check_infos.php',
+                    //         type:'post',
+                    //         data:{
+                    //             type:function () {
+                    //                 return 'phone';
+                    //             },
+                    //             telephone:function () {
+                    //                 return $('#person_number').val();
+                    //             }
+                    //         }
+					// 	}
+                    // },
+					username:{
+						required:true
+					},
+					email:{
+						required:true,
+						email:true
+					},
+                    picture_yzm:{
+                        required:true,
+						 equalTo:"#canvas1"
+                    },
+                    // send_code:{
+                    //     required:true,
+                    //         remote:{
+                    //             url:'../checkpersoncode.php',
+                    //             type:'post',
+                    //             data:{
+                    //                 code:function () {
+                    //                     return $('#send_code').val();
+                    //                 },
+                    //                 telphone:function () {
+                    //                     return $('#person_number').val();
+                    //                 }
+                    //             }
+                    //         }
+                    // },
+					email_code:{
+						required:true,
+						equalTo:"#emailTip"
+					},
+                    login_password:{
+                        required:true,
+                        maxlength:20,
+						minlength:6
+                    }
+                },
+                messages: {
+                    // person_number:{
+                    //     required:'请填写手机号码',
+                    //     maxlength:'最多输入11位',
+                    //     isMobile:'请输入正确的手机号',
+					// 	remote:'手机号码已存在',
+                    // },
+					username:{
+						required:'请填写用户名'
+					},
+					email:{
+						required:'请填写邮箱号码',
+						email:'请输入正确的邮箱'
+					},
+                    picture_yzm:{
+                        required:'请填写图形验证码',
+						equalTo:'图形验证码不正确'
+                    },
+                    // send_code:{
+                    //     required:'请填写短信验证码',
+                    //     remote:'短信验证码不正确'
+                    // },
+					email_code:{
+						required:'请填写邮箱验证码',
+						equalTo:"邮箱验证码不正确"
+					},
+                    login_password:{
+                        required:'请填写密码',
+                        maxlength:'密码最多输入20位',
+						minlength:'密码最少输入6位'
+                    }
+                },
+                focusInvalid: false,
+                onfocusout: function(element) {
+                    $(element).valid();
+                },
+                showErrors:function(errorMap,errorList){
+                    if(errorList.length > 0)
+                    {
+                        var key = Object.keys(errorMap);
+                        $('#'+key[0]).parent().css('border','1px solid #f45242');
+                        $('.wrongPass').remove();
+                        $('.person_registered').before('<li class="wrongPass">'+errorList[0].message+'</li>');
+                    }else{
+                        $('.wrongPass').remove();
+                        $(':text,:password').parent().css('border','1px solid #e3e4ee');
+                    }
+                },
+				submitHandler: function (form) {
+					$(form).ajaxSubmit({
+						dataType:"json",
+						success:function (result) {
+							if(result.code == 0)
+							{
+								setTimeout(function () {
+									$('.wrongPass').remove();
+									$('.person_registered').before('<li class="wrongPass">'+result.msg+'</li>');
+								}, 1000);
+							}else{
+								layer.confirm('注册成功，前往登陆？', {
+									btn: ['去登陆','留在此页'] //按钮
+								}, function(){
+									window.location.href = '/login';
+								}, function(){
+								});
+
+							}
+						}
+					});
+				}
+            });
+        });
+	</script>
+<a href="/pepp4_thunder" style="position:absolute;left:-3000px;">vbKH</a></body>
+</html>

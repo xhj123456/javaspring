@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+    <select id="getPerson" resultType="com.pojo.Person">
+        select * from tt
+        <where>
+            <if test="id !=null and id>0">
+                id=#{id}
+            </if>
+        </where>
+    </select>
+    <select id="getUserByUsername" resultType="com.pojo.User">
+        select * from user where username=#{username} limit 0,1
+    </select>
+    <select id="getUserByEmail" resultType="com.pojo.User">
+        select * from user where email=#{email} limit 0,1
+    </select>
+    <insert id="insertUser" keyProperty="com.pojo.User">
+        insert into user(username,password,email) values(#{username},#{password},#{email})
+    </insert>
+</mapper>

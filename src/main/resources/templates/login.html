@@ -9,6 +9,8 @@
 	<title>个人中心--登录</title>
 	<link rel="stylesheet" th:href="@{css/reset.css}" />
 	<link rel="stylesheet" th:href="@{css/style.css}" />
+	<link rel="stylesheet" th:href="@{resources/layui/2.4.5/css/modules/layer/default/layer.css}" />
+	<script type="text/javascript" th:src="@{resources/layui/2.4.5/lay/modules/layer.js}" ></script>
 	<script type="text/javascript" th:src="@{js/jquery-1.8.3.min.js}"></script>
 </head>
 <body>
@@ -34,7 +36,7 @@
 				<li>动态密码登录</li>
 			</ul>
 			<div class="con">
-				<form id="person_login" action="/logins" style="display:block;" method="post" autocomplete="off">
+				<form id="person_login" action="/loginByUser" style="display:block;" method="post" autocomplete="off">
 					<ul>
 <!--						<li>-->
 <!--							<p class="formPhone clear">-->
@@ -72,7 +74,7 @@
 <!--						</li>-->
 					</ul>
 				</form>
-				<form action="../login_by_code_v1.php" id="person_send_login" method="post" autocomplete="off">
+				<form action="/loginByEmail" id="person_send_login" method="post" autocomplete="off">
 					<ul>
 <!--						<li>-->
 <!--							<div class="formPhone clear">-->
@@ -110,7 +112,6 @@
 							<p class="formPhone dxin_yzm clear">
 								<input type="text" name="email_code" id="email_code" placeholder="邮箱验证码" title="邮箱验证码" class="fl">
 								<input type="button" value="获取验证码" class="getYzm fr" id="send-email-code" name="send-email-code">
-								<input type="hidden" id="emailTip" value="">
 							</p>
 						</li>
 						<!--<li class="wrongPass">验证码错误</li>-->
@@ -222,11 +223,9 @@
 				}
 			},
 			submitHandler: function (form) {
-				alert(2);
 				$(form).ajaxSubmit({
 					dataType:"json",
 					success:function (result) {
-						console.log(result)
 						if(result.code == 0)
 						{
 							setTimeout(function () {
@@ -234,7 +233,7 @@
 								$('.personalLog').before('<li class="wrongPass">'+result.msg+'</li>');
 							}, 1000);
 						}else{
-							// window.location.href = './index.php';
+							window.location.href = '/index';
 						}
 					}
 				});
@@ -268,7 +267,16 @@
 				},
 				email_code:{
 					required:true,
-					equalTo:"#emailTip"
+					remote: {
+						url:'/validateEmail',
+						type:'post',
+						data:{
+							code:function () {
+								return $('#email_code').val();
+							}
+						}
+					}
+					// equalTo:"#emailTip"
 				}
 				// send_code:{
 				// 	required:true,
@@ -305,7 +313,7 @@
 				},
 				email_code:{
 					required:'请填写邮箱验证码',
-					equalTo:"邮箱验证码不正确"
+					remote:"邮箱验证码不正确"
 				}
 				// send_code:{
 				// 	required:'请填写短信验证码',
@@ -327,6 +335,22 @@
 					$('.wrongPass').remove();
 					$(':text,:password').parent().css('border','1px solid #e3e4ee');
 				}
+			},
+			submitHandler: function (form) {
+				$(form).ajaxSubmit({
+					dataType:"json",
+					success:function (result) {
+						if(result.code == 0)
+						{
+							setTimeout(function () {
+								$('.wrongPass').remove();
+								$('.personalLog').before('<li class="wrongPass">'+result.msg+'</li>');
+							}, 1000);
+						}else{
+							window.location.href = '/index';
+						}
+					}
+				});
 			}
 		});
 	});

@@ -7,6 +7,7 @@ import jdk.nashorn.internal.runtime.JSONListAdapter;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,5 +21,9 @@ public class EmailCodeController {
     @RequestMapping("/email")
     public JSONObject email(@RequestParam(value = "email")String emailName) throws EmailException {
         return emailCodeService.sendEmailCode(emailName);
+    }
+    @RequestMapping("/validateEmail")
+    public Boolean validateEmail(@RequestParam(value = "code")String code){
+        return emailCodeService.validateEmailCode(code);
     }
 }

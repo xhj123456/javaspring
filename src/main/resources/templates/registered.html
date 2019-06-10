@@ -65,7 +65,6 @@
 							<p class="formPhone dxin_yzm clear">
 								<input type="text" name="email_code" id="email_code" placeholder="邮箱验证码" title="邮箱验证码" class="fl">
 								<input type="button" value="获取验证码" class="getYzm fr" id="send-email-code" name="send-email-code">
-								<input type="hidden" id="emailTip" value="">
 							</p>
 						</li>
 						<li> 
@@ -233,7 +232,16 @@
                     // },
 					email_code:{
 						required:true,
-						equalTo:"#emailTip"
+						remote: {
+							        url:'/validateEmail',
+							        type:'post',
+							        data:{
+							            code:function () {
+							                return $('#email_code').val();
+							            }
+							        }
+								}
+						// equalTo:"#emailTip"
 					},
                     login_password:{
                         required:true,
@@ -265,7 +273,7 @@
                     // },
 					email_code:{
 						required:'请填写邮箱验证码',
-						equalTo:"邮箱验证码不正确"
+						remote:"邮箱验证码不正确"
 					},
                     login_password:{
                         required:'请填写密码',

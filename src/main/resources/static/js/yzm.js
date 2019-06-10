@@ -62,7 +62,10 @@ $('#send-email-code').click(function(){
     //校验邮箱
     var email = $("#email").val();
     if(!email.match(/^[a-z0-9]+([._]*[a-z0-9]+)*@[a-z0-9]+([_.][a-z0-9]+)+$/gi)){
-        alert("邮箱格式不正确！请重新输入");
+        layer.msg('邮箱格式不正确！请重新输入', {
+            time: 20000, //20s后自动关闭
+            btn: ['确定']
+        });
         return false;
     }
 
@@ -79,9 +82,8 @@ $('#send-email-code').click(function(){
  	async:true,
  	data:{"email":email},
  	success:function(obj){
- 	    console.log(obj);
+ 	    // console.log(obj);
  		if(obj.status==200){//验证码发送成功
- 		    // alert("验证码已发到您的邮箱,请查收")
             layer.msg('验证码已发到您的邮箱,请查收', {
                 time: 20000, //20s后自动关闭
                 btn: ['确定']
@@ -89,7 +91,6 @@ $('#send-email-code').click(function(){
             $("#emailTip").val(obj.code);
  			// $('#emailTip').html("<font color='#339933'>√ 邮箱验证码已发到您的手机,请查收</font>");
  		}else{
-            // alert("验证码发送失败，请重新发送")
             layer.msg('验证码发送失败，请重新发送', {
                 time: 20000, //20s后自动关闭
                 btn: ['确定']

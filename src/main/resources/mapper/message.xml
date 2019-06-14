@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.MessageMapper">
+    <insert id="addMessage">
+        insert into message(uid,message,date) values(#{uid},#{message},#{date})
+    </insert>
+<!--    <select id="findAll" resultType="com.pojo.Message">-->
+<!--        select a.id id,a.message message,b.id uid,b.username from message a,user b where a.uid = b.id-->
+<!--    </select>-->
+    <select id="findAll" resultMap="userInMsg">
+        select * from message order by id desc
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select COUNT(*) from message
+    </select>
+    <resultMap id="userInMsg" type="com.pojo.Message">
+        <id column="uid" property="uid"/>
+        <collection property="user" column="uid" javaType="com.pojo.User" select="com.mapper.UserMapper.getUserById"></collection>
+    </resultMap>
+</mapper>

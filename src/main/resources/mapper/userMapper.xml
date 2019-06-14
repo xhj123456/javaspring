@@ -17,6 +17,9 @@
     <select id="getUserByEmail" resultType="com.pojo.User">
         select * from user where email=#{email} limit 0,1
     </select>
+    <select id="getUserById" resultType="com.pojo.User">
+        select * from user where id=#{id} limit 0,1
+    </select>
     <insert id="insertUser" keyProperty="com.pojo.User">
         insert into user(username,password,email) values(#{username},#{password},#{email})
     </insert>

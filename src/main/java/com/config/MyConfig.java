@@ -14,6 +14,8 @@ public class MyConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/image/**")
+                .addResourceLocations("file:E:\\upload\\");
 
     }
 }

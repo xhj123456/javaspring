@@ -197,6 +197,7 @@
       laypage.render({
         elem: 'demo'
         ,count: [[${count}]] //数据总数，从服务端得到
+        , limit: 10                      //每页显示条数
       });
       menu.init();
       menu.submit()

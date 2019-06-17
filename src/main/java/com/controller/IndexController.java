@@ -2,12 +2,17 @@ package com.controller;
 
 import com.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@PropertySource("classpath:config/config.properties")
 public class IndexController {
+    @Value("${numEveryPage}")
+    private String numEveryPage;
     @Autowired
     MessageService messageService;
     @RequestMapping("/")
@@ -17,9 +22,9 @@ public class IndexController {
     }
     @RequestMapping("/leacots")
     public String leacots(Model model){
-        System.out.println(messageService.getAllMessage());
-        model.addAttribute("message",messageService.getAllMessage());
+        model.addAttribute("message",messageService.getAllMessage(0,Integer.valueOf(numEveryPage)));
         model.addAttribute("count",messageService.getCount());
+        model.addAttribute("num",numEveryPage);
         return "leacots";
     }
     @RequestMapping("/yzm")

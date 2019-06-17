@@ -21,8 +21,8 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     HttpSession httpSession;
     @Override
-    public List<Message> getAllMessage() {
-        return messageMapper.findAll();
+    public List<Message> getAllMessage(Integer begin,Integer num) {
+        return messageMapper.findAll(begin,num);
     }
 
     @Override

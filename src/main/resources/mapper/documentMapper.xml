@@ -7,4 +7,37 @@
         insert into document(title,description,content,date,pic,category_id,uid)
         values (#{title},#{description},#{content},#{date},#{pic},#{category_id},#{uid})
     </insert>
+    <select id="getAllDocument" resultMap="userInDocument">
+        select * from document
+        <where>
+            <if test="title != null and title != ''">
+                title like concat('%',#{title},'%')
+            </if>
+            <if test="start !=null and start != ''">
+                and date >= #{start}
+            </if>
+            <if test="end !=null and end != ''">
+                and date  &lt;= #{end}
+            </if>
+        </where>
+        limit #{begin},#{num}
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from document
+        <where>
+            <if test="title != null and title != ''">
+                title like concat('%',#{title},'%')
+            </if>
+            <if test="start !=null and start != ''">
+                and date >= #{start}
+            </if>
+            <if test="end !=null and end != ''">
+                and date  &lt;= #{end}
+            </if>
+        </where>
+    </select>
+    <resultMap id="userInDocument" type="com.pojo.Document">
+        <id column="uid" property="uid"/>
+        <collection property="user" column="uid" javaType="com.pojo.User" select="com.mapper.UserMapper.getUserById"></collection>
+    </resultMap>
 </mapper>

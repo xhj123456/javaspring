@@ -27,8 +27,8 @@ layui.define(['mm','jquery'],function(exports){
           $('.menu').removeClass('on');
         }
       };
-    var count = $('.list-cont .cont').length;
-    $('.volume span').text(count);
+    // var count = $('.list-cont .cont').length;
+    // $('.volume span').text(count);
     $('.op-list .like').on('click',function(){
       var oSpan =  $(this).children('span');
       var num = parseInt($(oSpan).text())
@@ -70,7 +70,7 @@ layui.define(['mm','jquery'],function(exports){
         var event = e || event;
         event.preventDefault();
         var $listcont = $(this).parents('.form').siblings('.list-cont').length ? $(this).parents('.form').siblings('.list-cont') : $(this).parents('.form-box').siblings('.list-cont');
-        // console.log($listcont)
+        console.log($listcont)
         var img = $(this).parents('form').siblings('img').attr('src');
         var textarea = $(this).parents('.layui-form-item').siblings('.layui-form-text').children('.layui-input-block').children('textarea');
         var name = $(textarea).val();
@@ -86,22 +86,20 @@ layui.define(['mm','jquery'],function(exports){
             url:"/addMsg",
             type:'post',
             data:{msg:name},
-            // beforeSend:function () {
-            //   this.layerIndex = layer.load(0, { shade: [0.5, '#393D49'] });
-            // },
             success:function(data){
               if (data.status==200){
-                datas.name = data.username;
-                datas.date=data.date;
-                // console.log(datas);
-                var cont = mm.renderHtml(html,datas);
-                // console.log(cont);
-                $listcont.prepend(cont);
-                // console.log($listcont);
-                var cunt = $th.parents('.form-box').siblings('.volume').children('span');
-                var cunts = $th.parents('.form-box').siblings('.list-cont').children('.cont').length;
-                textarea.val('');
-                cunt.text(cunts);
+                window.location.href = '/leacots';
+                // datas.name = data.username;
+                // datas.date=data.date;
+                // // console.log(datas);
+                // var cont = mm.renderHtml(html,datas);
+                // // console.log(cont);
+                // $listcont.prepend(cont);
+                // // console.log($listcont);
+                // var cunt = $th.parents('.form-box').siblings('.volume').children('span');
+                // var cunts = $th.parents('.form-box').siblings('.list-cont').children('.cont').length;
+                // textarea.val('');
+                // // cunt.text(cunts);
               }else if(data.status==-1){
                 layer.confirm(data.msg, {
                   btn: ['去登陆','留在此页'] //按钮

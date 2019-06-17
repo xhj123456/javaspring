@@ -10,7 +10,7 @@
 <!--        select a.id id,a.message message,b.id uid,b.username from message a,user b where a.uid = b.id-->
 <!--    </select>-->
     <select id="findAll" resultMap="userInMsg">
-        select * from message order by id desc
+        select * from message order by id desc limit #{begin},#{num}
     </select>
     <select id="count" resultType="java.lang.Integer">
         select COUNT(*) from message

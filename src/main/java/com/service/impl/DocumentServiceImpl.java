@@ -6,8 +6,8 @@ import com.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -25,5 +25,15 @@ public class DocumentServiceImpl implements DocumentService {
             map.put("msg","添加失败");
         }
         return map;
+    }
+
+    @Override
+    public List<Document> document_list(String title, String start, String end,int begin,int num) {
+        return documentMapper.getAllDocument(title,start,end,begin,num);
+    }
+
+    @Override
+    public int count(String title,String start,String end) {
+        return documentMapper.getCount(title, start, end);
     }
 }

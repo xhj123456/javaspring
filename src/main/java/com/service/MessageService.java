@@ -10,7 +10,7 @@ public interface MessageService {
      * 获取所有的留言
      * @return
      */
-    List<Message> getAllMessage();
+    List<Message> getAllMessage(Integer begin,Integer num);
 
     /**
      * 新增留言

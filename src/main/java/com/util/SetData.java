@@ -1,5 +1,6 @@
 package com.util;
 
+import com.pojo.Category;
 import com.pojo.Document;
 import com.pojo.User;
 import com.service.UserService;
@@ -54,5 +55,19 @@ public class SetData {
         document.setTitle(map.get("title")[0]);
         document.setUid(1);
         return document;
+    }
+    /**
+     * 设置Category对象
+     * @param map
+     * @return
+     */
+    @Autowired
+    Category category;
+    public Category setCate(Map<String,String[]> map){
+        category.setPid(Integer.valueOf(map.get("pid")[0]));
+        category.setIcon(map.get("icon")[0]);
+        category.setCname(map.get("cname")[0]);
+        category.setOrderby(Integer.valueOf(map.get("orderby")[0]));
+        return category;
     }
 }

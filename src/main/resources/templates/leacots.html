@@ -127,10 +127,8 @@
         elem: 'demo'
         ,count: [[${count}]] //数据总数，从服务端得到
         , limit: [[${num}]]//每页显示条数
-        ,first: false
         ,jump: function(obj,first){
           if (!first){
-            console.log(first);
             $.ajax({
               url:"/msgList",
               type:'post',

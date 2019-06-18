@@ -20,6 +20,7 @@
                 and date  &lt;= #{end}
             </if>
         </where>
+        order by id desc
         limit #{begin},#{num}
     </select>
     <select id="getCount" resultType="java.lang.Integer">

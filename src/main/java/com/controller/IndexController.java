@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.service.DocumentService;
 import com.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +16,14 @@ public class IndexController {
     private String numEveryPage;
     @Autowired
     MessageService messageService;
+    @Autowired
+    DocumentService documentService;
     @RequestMapping("/")
     public String index(Model model){
-        model.addAttribute("count",80);
+        Integer num = Integer.valueOf(numEveryPage);
+        model.addAttribute("count",documentService.count("","",""));
+        model.addAttribute("num",num);
+        model.addAttribute("list",documentService.document_list("","","",0,num));
         return "index";
     }
     @RequestMapping("/leacots")

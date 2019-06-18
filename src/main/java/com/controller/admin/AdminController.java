@@ -60,4 +60,8 @@ public class AdminController {
     public String document_add(){
         return "admin/html/document-add";
     }
+    @RequestMapping("/admin/category")
+    public String category_list(){
+        return "admin/html/category";
+    }
 }

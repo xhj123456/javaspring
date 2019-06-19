@@ -41,7 +41,7 @@ public class SetData {
         Date date = new Date();
         SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
         String format = sfd.format(date);
-        document.setCategory_id(1);
+        document.setCategory_id(Integer.valueOf(map.get("cid")[0]));
         if (map.get("content")[0]!=null){
             document.setContent(map.get("content")[0]);
         }
@@ -68,6 +68,9 @@ public class SetData {
         category.setIcon(map.get("icon")[0]);
         category.setCname(map.get("cname")[0]);
         category.setOrderby(Integer.valueOf(map.get("orderby")[0]));
+        if (map.get("url")[0]!=null){
+            category.setUrl(map.get("url")[0]);
+        }
         return category;
     }
 }

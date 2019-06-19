@@ -20,8 +20,9 @@ public interface DocumentMapper {
      * @param end 结束时间
      * @param begin 开始条数
      * @param num 每页条数
+     * @param cid 分类id
      * @return
      */
-    List<Document> getAllDocument(String title,String start,String end,int begin,int num);
-    int getCount(String title,String start,String end);
+    List<Document> getAllDocument(String title,String start,String end,int begin,int num,int cid);
+    int getCount(String title,String start,String end,int cid);
 }

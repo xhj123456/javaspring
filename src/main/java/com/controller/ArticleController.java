@@ -24,7 +24,9 @@ public class ArticleController {
     public Map<String,Object> list(HttpServletRequest request){
         Integer curr = request.getParameter("curr")==null?1:Integer.valueOf(request.getParameter("curr"));
         Integer begin = (curr-1)*Integer.valueOf(numEveryPage);
-        List<Document> list = documentService.document_list("","","",begin,Integer.valueOf(numEveryPage));
+        Integer num = Integer.valueOf(numEveryPage);
+        int cid = Integer.valueOf(request.getParameter("cid"));
+        List<Document> list = documentService.document_list("","","",begin,num,cid);
         Map<String, Object> map = new HashMap<>();
         map.put("data",list);
         return map;

@@ -6,7 +6,9 @@ import com.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -24,5 +26,23 @@ public class CategoryServiceImpl implements CategoryService {
             map.put("code","增加失败");
         }
         return null;
+    }
+
+    @Override
+    public Map<Object,Object> category_list() {
+        Map<Object,Object> map = new HashMap<>();
+        List<Category> categories = categoryMapper.cateList();
+        List<Category> cate1= new ArrayList<>();
+        List<Category> cate2= new ArrayList<>();
+        for (Category cate:categories){
+            if (cate.getPid()==0){
+                cate2.add(cate);
+            }else {
+                cate1.add(cate);
+            }
+        }
+        map.put("cate",cate2);
+        map.put("data",cate1);
+        return map;
     }
 }

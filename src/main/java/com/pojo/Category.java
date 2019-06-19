@@ -11,4 +11,5 @@ public class Category {
     private String icon;
     private int pid;
     private int orderby;
+    private String url;
 }

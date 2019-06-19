@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 顶部组件 -->
+<div class="header">
+    <div class="menu-btn">
+        <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+        <a href="index.html">
+            <span>MYBLOG</span>
+            <img th:src="@{img/logo.png}">
+        </a>
+    </h1>
+    <div class="nav">
+        <a th:each="cateList:${cate.get('cate')}" th:href="${cateList.getUrl()}" th:class="${cid==cateList.getCid()}?'active':''" th:text="${cateList.getCname()}">文章</a>
+    </div>
+    <p class="welcome-text">
+        欢迎来到<span class="name">小明</span>的博客~
+    </p>
+</div>
+</body>
+</html>

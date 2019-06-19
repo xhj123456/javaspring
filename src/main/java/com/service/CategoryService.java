@@ -11,5 +11,5 @@ public interface CategoryService {
      * @return
      */
     Map<String,String> category_add(Category category);
-    List<Category> category_list();
+    Map<Object,Object> category_list();
 }

@@ -38,7 +38,16 @@
                     <span class="x-red">*</span>分类图标
                 </label>
                 <div class="layui-input-inline" style="width: 300px;">
-                    <input type="text" id="icon" name="icon" required lay-verify="required"
+                    <input type="text" id="icon" name="icon" lay-verify=""
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="icon" class="layui-form-label">
+                    <span class="x-red">*</span>url地址
+                </label>
+                <div class="layui-input-inline" style="width: 300px;">
+                    <input type="text" id="url" name="url" lay-verify=""
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
@@ -49,9 +58,7 @@
                 <div class="layui-input-inline" style="width: 300px;">
                     <select name="pid" lay-verify="">
                         <option value="0">请选择一个分类</option>
-                        <option value="1">北京</option>
-                        <option value="2">上海</option>
-                        <option value="3">杭州</option>
+                        <option th:each="list:${cate.get('cate')}" th:value="${list.getCid()}" th:text="${list.getCname()}" th:if="${list.getPid()==0}">北京</option>
                     </select>
                 </div>
             </div>
@@ -70,7 +77,6 @@
         </form>
     </div>
     <script>
-//  	layui.use()
         layui.use(['form','layer','upload','layedit'], function(){
             $ = layui.jquery;
           var form = layui.form

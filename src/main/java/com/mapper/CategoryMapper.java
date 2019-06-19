@@ -9,4 +9,5 @@ import java.util.List;
 public interface CategoryMapper {
     int add(Category category);
     List<Category> cateList();
+    Category getCateById(Integer id);
 }

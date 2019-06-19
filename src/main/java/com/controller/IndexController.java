@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.service.CategoryService;
 import com.service.DocumentService;
 import com.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,17 @@ public class IndexController {
     MessageService messageService;
     @Autowired
     DocumentService documentService;
-    @RequestMapping("/")
+    @Autowired
+    CategoryService categoryService;
+    @RequestMapping("/index")
     public String index(Model model){
         Integer num = Integer.valueOf(numEveryPage);
-        model.addAttribute("count",documentService.count("","",""));
+//        int cid = ;
+        model.addAttribute("count",documentService.count("","","",3));
         model.addAttribute("num",num);
-        model.addAttribute("list",documentService.document_list("","","",0,num));
+        model.addAttribute("list",documentService.document_list("","","",0,num,3));
+        model.addAttribute("cate",categoryService.category_list());
+        model.addAttribute("cid",1);
         return "index";
     }
     @RequestMapping("/leacots")
@@ -31,6 +37,8 @@ public class IndexController {
         model.addAttribute("message",messageService.getAllMessage(0,Integer.valueOf(numEveryPage)));
         model.addAttribute("count",messageService.getCount());
         model.addAttribute("num",numEveryPage);
+        model.addAttribute("cate",categoryService.category_list());
+        model.addAttribute("cid",6);
         return "leacots";
     }
     @RequestMapping("/yzm")

@@ -28,12 +28,12 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Document> document_list(String title, String start, String end,int begin,int num) {
-        return documentMapper.getAllDocument(title,start,end,begin,num);
+    public List<Document> document_list(String title, String start, String end,int begin,int num,int cid) {
+        return documentMapper.getAllDocument(title,start,end,begin,num,cid);
     }
 
     @Override
-    public int count(String title,String start,String end) {
-        return documentMapper.getCount(title, start, end);
+    public int count(String title,String start,String end,int cid) {
+        return documentMapper.getCount(title, start, end,cid);
     }
 }

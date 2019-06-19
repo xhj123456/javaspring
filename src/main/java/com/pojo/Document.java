@@ -15,4 +15,5 @@ public class Document {
     private int uid;
     private int category_id;
     private User user;
+    private Category category;
 }

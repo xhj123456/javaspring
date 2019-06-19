@@ -10,8 +10,9 @@
     <select id="getAllDocument" resultMap="userInDocument">
         select * from document
         <where>
+            category_id=#{cid}
             <if test="title != null and title != ''">
-                title like concat('%',#{title},'%')
+                and  title like concat('%',#{title},'%')
             </if>
             <if test="start !=null and start != ''">
                 and date >= #{start}
@@ -26,8 +27,9 @@
     <select id="getCount" resultType="java.lang.Integer">
         select count(*) from document
         <where>
+            category_id=#{cid}
             <if test="title != null and title != ''">
-                title like concat('%',#{title},'%')
+                and title like concat('%',#{title},'%')
             </if>
             <if test="start !=null and start != ''">
                 and date >= #{start}
@@ -37,8 +39,14 @@
             </if>
         </where>
     </select>
-    <resultMap id="userInDocument" type="com.pojo.Document">
-        <id column="uid" property="uid"/>
-        <collection property="user" column="uid" javaType="com.pojo.User" select="com.mapper.UserMapper.getUserById"></collection>
+    <resultMap id="userInDocument" type="com.pojo.Document" autoMapping="true">
+<!--        <id column="uid" property="uid"/>-->
+        <association property="user" column="uid" javaType="com.pojo.User" select="com.mapper.UserMapper.getUserById">
+
+        </association>
+<!--        <id column="category_id" property="category_id"/>-->
+        <association property="category" column="category_id" javaType="com.pojo.Category" select="com.mapper.CategoryMapper.getCateById">
+
+        </association>
     </resultMap>
 </mapper>

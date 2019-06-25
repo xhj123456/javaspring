@@ -25,4 +25,7 @@ public interface DocumentMapper {
      */
     List<Document> getAllDocument(String title,String start,String end,int begin,int num,int cid);
     int getCount(String title,String start,String end,int cid);
+    Document getDocumentById(int id);
+    Document getPrevDocumentById(int id);
+    Document getNextDocumentById(int id);
 }

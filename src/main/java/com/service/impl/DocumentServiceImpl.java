@@ -36,4 +36,19 @@ public class DocumentServiceImpl implements DocumentService {
     public int count(String title,String start,String end,int cid) {
         return documentMapper.getCount(title, start, end,cid);
     }
+
+    @Override
+    public Document document_details(int id) {
+        return documentMapper.getDocumentById(id);
+    }
+
+    @Override
+    public Document document_prev(int id) {
+        return documentMapper.getPrevDocumentById(id);
+    }
+
+    @Override
+    public Document document_next(int id) {
+        return documentMapper.getNextDocumentById(id);
+    }
 }

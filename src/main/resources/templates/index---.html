@@ -19,11 +19,11 @@
   </div>
 
   <div class="content">
-    <div class="cont w1000" th:fragment="documentCate">
+    <div class="cont w1000">
       <div class="title">
         <span class="layui-breadcrumb" lay-separator="|">
-          <a th:each="cateList:${cate.get('data')}" th:href="'/index?cid='+${cateList.getCid()}" href="" th:if="${cateList.getPid()==1}"
-             th:class="${cateId==cateList.getCid()}?'active':''" th:text="${cateList.getCname()}">设计文章</a>
+          <a th:each="cateList:${cate.get('data')}" href="javascript:;" th:if="${cateList.getPid()==1}"
+             th:class="${3==cateList.getCid()}?'active':''" th:text="${cateList.getCname()}">设计文章</a>
 <!--          <a href="javascript:;">前端文章</a>-->
 <!--          <a href="javascript:;">旅游杂记</a>-->
         </span>
@@ -61,11 +61,48 @@
       element = layui.element,laypage = layui.laypage,$ = layui.$,menu = layui.menu;
       laypage.render({
         elem: 'demo'
-        ,count: [[${count}]] //数据总数，从服务端得到
-        ,limit:[[${num}]]//每页显示条数
+        ,count: 50 //数据总数，从服务端得到
+        ,limit:10//每页显示条数
         ,jump:function (obj,first) {
-            $("#list").load("articleList?curr="+obj.curr+"&cid="+[[${cateId}]]);
+          //
+
+          // if (obj){
+          //   obj.cid=3;
+          // }
+          $("#list").load("test?curr="+obj.curr+"&cid="+3);
+
+
+            // $.ajax({
+            //   url: "/articleList",
+            //   type: 'post',
+            //   data: obj,
+            //   dataType: 'json',
+            //   success: function (data) {
+            //     var str = '';
+            //     for (var i = 0; i < data.data.length; i++) {
+            //       str += ' <div class="item">\n' +
+            //               '          <div class="layui-fluid">\n' +
+            //               '            <div class="layui-row">\n' +
+            //               '              <div class="layui-col-xs12 layui-col-sm4 layui-col-md5">\n' +
+            //               '                <div class="img"><img src="' + data.data[i].pic + '" height="400" width="500" alt=""></div>\n' +
+            //               '              </div>\n' +
+            //               '              <div class="layui-col-xs12 layui-col-sm8 layui-col-md7">\n' +
+            //               '                <div class="item-cont">\n' +
+            //               '                  <h3">' + data.data[i].title + '<button class="layui-btn layui-btn-danger new-icon">new</button></h3>\n' +
+            //               '                  <h5>' + data.data[i].category.cname + '</h5>\n' +
+            //               '                  <p>' + data.data[i].description + '</p>\n' +
+            //               '                  <a href="documentDetails?id='+data.data[i].id+'" class="go-icon"></a>\n' +
+            //               '                </div>\n' +
+            //               '              </div>\n' +
+            //               '            </div>\n' +
+            //               '          </div>\n' +
+            //               '        </div>'
+            //     }
+            //     $("#list").html(str);
+            //   }
+            // })
           }
+        // }
       });
       menu.init();
     })

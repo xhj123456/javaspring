@@ -26,4 +26,24 @@ public interface DocumentService {
      */
     List<Document> document_list(String title,String start,String end,int begin,int num,int cid);
     int count(String title,String start,String end,int cid);
+
+    /**
+     * 获取文章详情
+     * @param id 文章id
+     * @return
+     */
+    Document document_details(int id);
+
+    /**
+     * 上一章
+     * @param id
+     * @return
+     */
+    Document document_prev(int id);
+    /**
+     * 下一章
+     * @param id
+     * @return
+     */
+    Document document_next(int id);
 }

@@ -49,4 +49,14 @@
 
         </association>
     </resultMap>
+
+    <select id="getDocumentById" resultMap="userInDocument">
+        select * from document where id=#{id} limit 1
+    </select>
+    <select id="getPrevDocumentById" resultType="com.pojo.Document">
+        select * from document where id&lt;#{id} order by id desc limit 1
+    </select>
+    <select id="getNextDocumentById" resultType="com.pojo.Document">
+        select * from document where id>#{id} order by id limit 1
+    </select>
 </mapper>

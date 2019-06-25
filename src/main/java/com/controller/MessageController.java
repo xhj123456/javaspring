@@ -6,6 +6,7 @@ import com.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @PropertySource("classpath:config/config.properties")
 public class MessageController {
     @Value("${numEveryPage}")
@@ -30,12 +31,13 @@ public class MessageController {
         return messageService.add(message);
     };
     @RequestMapping("/msgList")
-    public Map<String,Object> msgList(HttpServletRequest request){
+    public String msgList(HttpServletRequest request){
         Integer curr = request.getParameter("curr")==null?1:Integer.valueOf(request.getParameter("curr"));
         Integer begin = (curr-1)*Integer.valueOf(numEveryPage);
         List<Message> list = messageService.getAllMessage(begin, Integer.valueOf(numEveryPage));
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("data",list);
-        return map;
+        request.setAttribute("message",list);
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("data",list);
+        return "leacots::item";
     };
 }

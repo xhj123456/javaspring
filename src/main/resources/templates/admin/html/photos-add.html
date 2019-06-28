@@ -27,7 +27,7 @@
                 <input type="hidden" th:value="${cid}" name="cid">
                 <div class="layui-form-item">
                     <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>文章标题
+                        <span class="x-red">*</span>图片标题
                     </label>
                     <div class="layui-input-inline" style="width: 300px;">
                         <input type="text" id="title" name="title" required lay-verify="required"
@@ -36,7 +36,7 @@
                 </div>
                 <div class="layui-form-item">
                     <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>文章封面
+                        <span class="x-red">*</span>图片
                     </label>
 <!--                    <div  class="layui-upload">-->
 					  <!--<button type="button" class="layui-btn" id="test1">上传图片</button>-->
@@ -47,20 +47,13 @@
 					    <p id="demoText"></p>
 					  </div>
                 </div>
-                <div class="layui-form-item layui-form-text">
-                    <label for="description" class="layui-form-label">
-                        	文章描述
+                <div class="layui-form-item">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>拍照地址
                     </label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="description" name="description" class="layui-textarea"></textarea>
-                    </div>
-                </div>
-                <div class="layui-form-item layui-form-text">
-                    <label for="description" class="layui-form-label">
-                        	文章内容
-                    </label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea"></textarea>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="addr" name="addr" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -69,7 +62,6 @@
             </form>
     </div>
     <script>
-//  	layui.use()
         layui.use(['form','layer','upload','layedit'], function(){
             $ = layui.jquery;
           var form = layui.form
@@ -146,7 +138,7 @@
               data.field.file=file;
             console.log(data);
               $.ajax({
-                  url:"/admin/add",
+                  url:"/admin/addPhoto",
                   type:'post',
                   data:data.field,
                   dataType:'json',

@@ -46,4 +46,18 @@ public interface DocumentService {
      * @return
      */
     Document document_next(int id);
+
+    /**
+     * 修改文章
+     * @param document
+     * @return
+     */
+    Map<String,String> document_save(Document document);
+    /**
+     * 删除文章
+     * @param ids
+     * @return
+     */
+    Map<String,String> document_del(String ids);
+    Map<String,String> document_dels(Integer[] ids);
 }

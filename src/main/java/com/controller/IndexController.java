@@ -1,8 +1,11 @@
 package com.controller;
 
+import com.pojo.Photos;
 import com.service.CategoryService;
 import com.service.DocumentService;
 import com.service.MessageService;
+import com.service.PhotosService;
+import com.util.SetData;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @PropertySource("classpath:config/config.properties")
@@ -23,6 +29,10 @@ public class IndexController {
     DocumentService documentService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    PhotosService photosService;
+    @Autowired
+    SetData setData;
     @RequestMapping("/index")
     public String index(Model model, @Param(value = "cid")String cid){
         int cateId = cid==null?3:Integer.valueOf(cid);//分类id
@@ -56,7 +66,21 @@ public class IndexController {
     @RequestMapping("/album")
     public String album(Model model){
         model.addAttribute("cate",categoryService.category_list());
+        List<Photos> photos = photosService.photos_list("", "", "", 0, 1, 9);
+        Photos photoFirst = photos.get(0);
+        String dateStr = "";
+        if (setData.getDate().equals(photoFirst.getDate())) {
+           dateStr = "今日上传";
+        }else{
+            Date date = new Date();
+            Date date1 = new Date(photoFirst.getDate());
+            long l = (date.getTime() - date1.getTime()) % (1000 * 60 * 60 * 24);
+            dateStr = l+"天前上传";
+        }
         model.addAttribute("cid",7);
+        model.addAttribute("date",dateStr);
+        model.addAttribute("photosFirst",photoFirst);
+        model.addAttribute("photosList",photosService.photos_list("","","",1,100,9));
         return "album";
     }
     @RequestMapping("/whisper")

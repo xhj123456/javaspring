@@ -33,35 +33,10 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form method="post" action="/admin/document" class="layui-form layui-col-md12 x-so">
+        <form method="post" action="/admin/index" class="layui-form layui-col-md12 x-so">
           <input class="layui-input" th:value="${start}" placeholder="开始日" name="start" id="start">
           <input class="layui-input" th:value="${end}" placeholder="截止日" name="end" id="end">
-          <!--<div class="layui-input-inline">
-            <select name="contrller">
-              <option>支付状态</option>
-              <option>已支付</option>
-              <option>未支付</option>
-            </select>
-          </div>-->
-          <!--<div class="layui-input-inline">
-            <select name="contrller">
-              <option>支付方式</option>
-              <option>支付宝</option>
-              <option>微信</option>
-              <option>货到付款</option>
-            </select>
-          </div>-->
-          <!--<div class="layui-input-inline">
-            <select name="contrller">
-              <option value="">订单状态</option>
-              <option value="0">待确认</option>
-              <option value="1">已确认</option>
-              <option value="2">已收货</option>
-              <option value="3">已取消</option>
-              <option value="4">已完成</option>
-              <option value="5">已作废</option>
-            </select>
-          </div>-->
+          <input type="hidden" th:value="${cid}" name="cid">
           <input type="text" id="title" name="title"  th:value="${title}" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -87,17 +62,17 @@
         <tbody>
           <tr th:each="document : ${documentList}">
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id='${document.getId()}'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td th:text="${document.title}">${documentList.}</td>
             <td th:text="${document.getCategory().getCname()}">老王:18925139194</td>
             <td th:text="${document.date}">2017-08-17 18:22</td>
             <td th:text="${document.user.getUsername()}">2017-08-17 18:22</td>
             <td class="td-manage">
-              <a title="查看"  onclick="x_admin_show('编辑','order-view.html')" href="javascript:;">
+              <a title="查看" th:onclick="'javascript:x_admin_show(\'修改用户\',\'./document-edit.html?id='+${document.getId()}+'&&cid='+${cid}+'\');'" href="javascript:;">
                 <i class="layui-icon">&#xe63c;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+              <a title="删除" th:onclick="'javascript:member_del('+this+','+${document.getId()}+');'" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -106,16 +81,7 @@
       </table>
       <div class="page">
         <div>
-<!--          <a class="prev" th:href="@{/admin/document(page=${prev})}" th:if="${prev}>0">&lt;&lt;</a>-->
-<!--          <a class="num" th:href="@{/admin/document(page=${pageList.key})}" th:each="pageList:${pages}" th:text="${pageList.key}" th:if="${pageList.key}!=${current}"></a>-->
-<!--          <span class="current" th:each="pageList:${pages}" th:text="${pageList.key}" th:if="${pageList.key}==${current}"></span>-->
-<!--          <a class="num" href="">1</a>-->
-<!--          <a class="current">2</a>-->
-<!--          <a class="" href="">3</a>-->
-<!--          <a class="num" href="">489</a>-->
-
           <div id="demo0"></div>
-<!--          <a class="next" th:href="@{/admin/document(page=${next})}" th:if="${next}<${end}"> >&gt;&gt; </a>-->
         </div>
       </div>
 
@@ -143,11 +109,13 @@
         //执行一个laydate实例
         laydate.render({
           elem: '#start' //指定元素
+          ,trigger: 'click'
         });
 
         //执行一个laydate实例
         laydate.render({
           elem: '#end' //指定元素
+          ,trigger: 'click'
         });
       });
 
@@ -178,9 +146,24 @@
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
-              //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+            console.log(obj);
+            console.log(id);
+            $.ajax({
+              type:"post",
+              url:"del",
+              data:{ids:id},
+              dataType:'json',
+              success:function (data) {
+                if (data.code==200){
+                  //发异步删除数据
+                  // $(obj).parents("tr").remove();
+                  layer.msg('已删除!',{icon:1,time:1000});
+                  //重新加载父页面
+                  location.reload();
+                }
+              }
+            })
+
           });
       }
 
@@ -189,12 +172,43 @@
       function delAll (argument) {
 
         var data = tableCheck.getData();
-  
+        if (data.length==0){
+          layer.msg('未选择删除项', {icon: 2});
+          return false;
+        }
         layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+          console.log(data);
+          $.ajax({
+            type:"post",
+            url:"delBatch",
+            data:{ids:data},
+            dataType:'json',
+            success:function (datas) {
+              if (datas.code==200){
+                //捉到所有被选中的，发异步进行删除
+                layer.msg(datas.msg, {icon: 1});
+                $(".layui-form-checked").not('.header').parents('tr').remove();
+              }else {
+                layer.msg(datas.msg, {icon: 2});
+                return false;
+              }
+            }
+          })
         });
+      }
+
+      /**
+       * 处理数据
+       */
+      function getStr(data) {
+        var str = "";
+        for (var i=0;i<data.length;i++){
+          str += "'"+data[i]+"'";
+          if (i!=data.length-1){
+            str += ",";
+          }
+        }
+        return str;
       }
     </script>
   </body>

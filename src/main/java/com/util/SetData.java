@@ -2,6 +2,7 @@ package com.util;
 
 import com.pojo.Category;
 import com.pojo.Document;
+import com.pojo.Photos;
 import com.pojo.User;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +39,15 @@ public class SetData {
     @Autowired
     Document document;
     public Document setDocument(Map<String,String[]> map){
-        Date date = new Date();
-        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-        String format = sfd.format(date);
+
         document.setCategory_id(Integer.valueOf(map.get("cid")[0]));
+        if (map.get("id")!=null&&map.get("id")[0]!=null){
+            document.setId(Integer.valueOf(map.get("id")[0]));
+        }
         if (map.get("content")[0]!=null){
             document.setContent(map.get("content")[0]);
         }
-        document.setDate(format);
+        document.setDate(getDate());
         if (map.get("description")[0]!=null){
             document.setDescription(map.get("description")[0]);
         }
@@ -72,5 +74,30 @@ public class SetData {
             category.setUrl(map.get("url")[0]);
         }
         return category;
+    }
+    /**
+     * 设置Photos对象
+     * @param map
+     * @return
+     */
+    @Autowired
+    Photos photos;
+    public Photos setPhotos(Map<String,String[]> map){
+        photos.setCid(Integer.valueOf(map.get("cid")[0]));
+        photos.setTitle(map.get("title")[0]);
+        photos.setUid(1);
+        photos.setDate(getDate());
+        photos.setPic(map.get("file")[0]==null?"":map.get("file")[0]);
+        photos.setAddr(map.get("addr")[0]==null?"":map.get("addr")[0]);
+        if (map.get("id")!=null&&map.get("id")[0]!=null){
+            photos.setId(Integer.valueOf(map.get("id")[0]));
+        }
+        return photos;
+    }
+    public String getDate(){
+        Date date = new Date();
+        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+        String format = sfd.format(date);
+        return format;
     }
 }

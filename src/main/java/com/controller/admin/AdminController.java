@@ -4,23 +4,17 @@ import com.pojo.Document;
 import com.service.CategoryService;
 import com.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@PropertySource("classpath:config/config.properties")
-public class AdminController {
-    @Value("${numEveryPage}")
-    private String numEveryPage;
+public class AdminController extends MyController{
     @Autowired
     DocumentService documentService;
     @Autowired
@@ -45,23 +39,22 @@ public class AdminController {
             page = Integer.valueOf(request.getParameter("page"));//当前页数
         }
         int begin = (page-1)*Integer.valueOf(numEveryPage);
-        String title = request.getParameter("title")==null?"":request.getParameter("title");
-        String start = request.getParameter("start")==null?"":request.getParameter("start");
-        String end = request.getParameter("end")==null?"":request.getParameter("end");
         Integer num = Integer.valueOf(numEveryPage);
         int cid = Integer.valueOf(request.getParameter("cid"));
+        Map<String, String> data = getData(request, model);
         //获取文章列表
-        List<Document> documents = documentService.document_list(title, start, end,begin,num,cid);
+        List<Document> documents = documentService.document_list(data.get("title"), data.get("start"),
+                data.get("end"),begin,num,cid);
         System.out.println(documents);
         //获取总条数
-        int count = documentService.count(title, start, end,cid);
+        int count = documentService.count(data.get("title"), data.get("start"), data.get("end"),cid);
         model.addAttribute("documentList",documents);
         model.addAttribute("count",count);//总条数
         model.addAttribute("current",page);//当前页数
         model.addAttribute("num",numEveryPage);//每页条数
-        model.addAttribute("title",title);//标题
-        model.addAttribute("start",start);//开始时间
-        model.addAttribute("end",end);//结束时间
+        model.addAttribute("title",data.get("title"));//标题
+        model.addAttribute("start",data.get("start"));//开始时间
+        model.addAttribute("end", data.get("end"));//结束时间
         model.addAttribute("cid",cid);//分类id
         return "admin/html/document";
     }
@@ -69,6 +62,13 @@ public class AdminController {
     public String document_add(Model model,@RequestParam("cid")String cid){
         model.addAttribute("cid",cid);
         return "admin/html/document-add";
+    }
+    @RequestMapping("/admin/document-edit")
+    public String document_edit(Model model,@RequestParam("id")String id,@RequestParam("cid")String cid){
+        System.out.println(id+"1111");
+        model.addAttribute("cid",cid);
+        model.addAttribute("document",documentService.document_details(Integer.valueOf(id)));
+        return "admin/html/document-edit";
     }
     @RequestMapping("/admin/category")
     public String category_list(Model model){

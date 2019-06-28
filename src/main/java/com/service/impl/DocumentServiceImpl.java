@@ -5,14 +5,17 @@ import com.pojo.Document;
 import com.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Service
+@Transactional
 public class DocumentServiceImpl implements DocumentService {
     @Autowired
     DocumentMapper documentMapper;
+//    @Transactional(readOnly = true)
     @Override
     public Map<String, String> document_add(Document document) {
         Map<String, String> map = new HashMap<>();
@@ -50,5 +53,47 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public Document document_next(int id) {
         return documentMapper.getNextDocumentById(id);
+    }
+
+    @Override
+    public Map<String, String> document_save(Document document) {
+        Map<String, String> map = new HashMap<>();
+        int i = documentMapper.updateDocumentById(document);
+        if (i>0){
+            map.put("code","200");
+            map.put("msg","修改成功");
+        }else {
+            map.put("code","0");
+            map.put("msg","修改失败");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, String> document_del(String ids) {
+        Map<String, String> map = new HashMap<>();
+        int i = documentMapper.deleteDocument(ids);
+        if (i>0){
+            map.put("code","200");
+            map.put("msg","删除成功");
+        }else {
+            map.put("code","0");
+            map.put("msg","删除失败");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, String> document_dels(Integer[] ids) {
+        Map<String, String> map = new HashMap<>();
+        int i = documentMapper.deleteDocuments(ids);
+        if (i>0){
+            map.put("code","200");
+            map.put("msg","删除成功");
+        }else {
+            map.put("code","0");
+            map.put("msg","删除失败");
+        }
+        return map;
     }
 }

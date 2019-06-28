@@ -25,13 +25,14 @@
     <div class="x-body">
         <form action="" method="post" class="layui-form layui-form-pane">
                 <input type="hidden" th:value="${cid}" name="cid">
+                <input type="hidden" th:value="${document.getId()}" name="id">
                 <div class="layui-form-item">
                     <label for="title" class="layui-form-label">
                         <span class="x-red">*</span>文章标题
                     </label>
                     <div class="layui-input-inline" style="width: 300px;">
                         <input type="text" id="title" name="title" required lay-verify="required"
-                        autocomplete="off" class="layui-input">
+                        autocomplete="off" class="layui-input" th:value="${document.getTitle()}">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -41,7 +42,8 @@
 <!--                    <div  class="layui-upload">-->
 					  <!--<button type="button" class="layui-btn" id="test1">上传图片</button>-->
 					  <button type="button" class="layui-btn layui-btn-normal" id="test8" name="pic">选择图片</button>
-					  <button type="button" class="layui-btn" id="test9">开始上传</button>
+                      <span id="pic" class="layui-inline layui-upload-choose" th:text="${document.getPic()}"></span>
+                      <button type="button" class="layui-btn" id="test9">开始上传</button>
 					  <div class="layui-upload-list">
 					    <img class="layui-upload-img" id="demo1">
 					    <p id="demoText"></p>
@@ -52,7 +54,7 @@
                         	文章描述
                     </label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="description" name="description" class="layui-textarea"></textarea>
+                        <textarea placeholder="请输入内容" id="description" name="description" class="layui-textarea" th:text="${document.getDescription()}"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
@@ -60,11 +62,11 @@
                         	文章内容
                     </label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea"></textarea>
+                        <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea" th:text="${document.getContent()}"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                <button class="layui-btn" lay-submit="" lay-filter="add">增加</button>
+                <button class="layui-btn" lay-submit="" lay-filter="add">修改</button>
               </div>
             </form>
     </div>
@@ -143,25 +145,30 @@
           //监听提交
           form.on('submit(add)', function(data){
               data.field.content=layedit.getContent(index);
-              data.field.file=file;
+              if (file==""){
+                  data.field.file=$("#pic").html();
+              }else{
+                  data.field.file=file;
+              }
             console.log(data);
               $.ajax({
-                  url:"/admin/add",
+                  url:"/admin/edit",
                   type:'post',
                   data:data.field,
                   dataType:'json',
                   success:function(datas){
-                        if (datas.code==200){
-                            //发异步，把数据提交给php
-                            layer.alert("增加成功", {icon: 6},function () {
-                                // 获得frame索引
-                                var index = parent.layer.getFrameIndex(window.name);
-                                //关闭当前frame
-                                parent.layer.close(index);
-                                //重新加载父页面
-                                parent.location.reload();
-                            });
-                        }
+                      if (datas.code==200){
+                          //发异步，把数据提交给php
+                          layer.alert("修改成功", {icon: 6},function () {
+                              // 获得frame索引
+                              var index = parent.layer.getFrameIndex(window.name);
+                              //关闭当前frame
+                              parent.layer.close(index);
+                              //重新加载父页面
+                              parent.location.reload();
+                          });
+                      }
+
                   }
               });
             return false;

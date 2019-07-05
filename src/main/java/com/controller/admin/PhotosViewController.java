@@ -44,5 +44,11 @@ public class PhotosViewController extends MyController {
         model.addAttribute("cid",cid);
         return "admin/html/photos-add";
     }
+    @RequestMapping("admin/photos-edit")
+    public String photos_edit(Model model,@RequestParam("cid")String cid,@RequestParam("id")Integer id){
+        model.addAttribute("cid",cid);
+        model.addAttribute("photosList",photosService.photos_detail(id));
+        return "admin/html/photos-edit";
+    }
 
 }

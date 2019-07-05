@@ -4,12 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper.DocumentMapper">
     <insert id="addDocument">
-        insert into document(title,description,content,date,pic,category_id,uid)
-        values (#{title},#{description},#{content},#{date},#{pic},#{category_id},#{uid})
+        insert into document(title,description,content,date,pic,category_id,uid,job,hobby,age,skill,
+        wx,phone,email,qq)
+        values (#{title},#{description},#{content},#{date},#{pic},#{category_id},#{uid},#{job},
+        #{hobby},#{age},#{skill},#{wx},#{phone},#{email},#{qq})
     </insert>
     <update id="updateDocumentById">
         update document set title=#{title},content=#{content},description=#{description},
-        pic=#{pic},date=#{date} where id=#{id}
+        pic=#{pic},date=#{date},job=#{job},hobby=#{hobby},age=#{age},skill=#{skill},wx=#{wx},phone=#{phone},
+         email=#{email},qq=#{qq} where id=#{id}
     </update>
     <delete id="deleteDocument">
         delete from document where id in (#{ids})

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @PropertySource("classpath:config/config.properties")
 public class MessageController {
     @Value("${numEveryPage}")
@@ -29,15 +29,5 @@ public class MessageController {
     public Map<String,String> addMsg(@RequestParam(value = "msg")String msg){
         message.setMessage(msg);
         return messageService.add(message);
-    };
-    @RequestMapping("/msgList")
-    public String msgList(HttpServletRequest request){
-        Integer curr = request.getParameter("curr")==null?1:Integer.valueOf(request.getParameter("curr"));
-        Integer begin = (curr-1)*Integer.valueOf(numEveryPage);
-        List<Message> list = messageService.getAllMessage(begin, Integer.valueOf(numEveryPage));
-        request.setAttribute("message",list);
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("data",list);
-        return "leacots::item";
     };
 }

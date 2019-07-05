@@ -44,12 +44,84 @@
 					  <button type="button" class="layui-btn layui-btn-normal" id="test8" name="pic">选择图片</button>
                       <span id="pic" class="layui-inline layui-upload-choose" th:text="${document.getPic()}"></span>
                       <button type="button" class="layui-btn" id="test9">开始上传</button>
-					  <div class="layui-upload-list">
-					    <img class="layui-upload-img" id="demo1">
-					    <p id="demoText"></p>
-					  </div>
+<!--					  <div class="layui-upload-list">-->
+<!--					    <img class="layui-upload-img" id="demo1">-->
+<!--					    <p id="demoText"></p>-->
+<!--					  </div>-->
                 </div>
-                <div class="layui-form-item layui-form-text">
+                <div class="layui-form-item" th:if="${cid==12}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>年龄
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="age" name="age" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.age}">
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${cid==12}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>职业
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="job" name="job" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.job}">
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${cid==12}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>爱好
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="hobby" name="hobby" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.hobby}">
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${cid==13}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>技能掌握度
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="skill" name="skill" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.skill}">
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${cid==14}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>微信
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="wx" name="wx" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.wx}">
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${cid==14}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>电话
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="phone" name="phone" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.phone}">
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${cid==14}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>邮箱
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="email" name="email" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.email}">
+                    </div>
+                </div>
+                <div class="layui-form-item" th:if="${cid==14}">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>qq
+                    </label>
+                    <div class="layui-input-inline" style="width: 300px;">
+                        <input type="text" id="qq" name="qq" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${document.qq}">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text" th:if="${pid!=8}">
                     <label for="description" class="layui-form-label">
                         	文章描述
                     </label>
@@ -57,7 +129,7 @@
                         <textarea placeholder="请输入内容" id="description" name="description" class="layui-textarea" th:text="${document.getDescription()}"></textarea>
                     </div>
                 </div>
-                <div class="layui-form-item layui-form-text">
+                <div class="layui-form-item layui-form-text" th:if="${pid==1}">
                     <label for="description" class="layui-form-label">
                         	文章内容
                     </label>

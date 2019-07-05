@@ -18,6 +18,8 @@ import java.util.Set;
  */
 @Repository
 public class SetData {
+    @Autowired
+    Md5 md5;
     /**
      * 设置User对象
      * @param map
@@ -27,7 +29,8 @@ public class SetData {
     User user;
     public User setUser(Map<String, String[]> map){
         user.setUsername(map.get("username")[0]);
-        user.setPassword(map.get("login_password")[0]);
+
+        user.setPassword(md5.md5(map.get("login_password")[0]));
         user.setEmail(map.get("email")[0]);
         return user;
     }
@@ -39,20 +42,43 @@ public class SetData {
     @Autowired
     Document document;
     public Document setDocument(Map<String,String[]> map){
-
         document.setCategory_id(Integer.valueOf(map.get("cid")[0]));
         if (map.get("id")!=null&&map.get("id")[0]!=null){
             document.setId(Integer.valueOf(map.get("id")[0]));
         }
-        if (map.get("content")[0]!=null){
+        if (map.get("content")!=null){
             document.setContent(map.get("content")[0]);
         }
         document.setDate(getDate());
-        if (map.get("description")[0]!=null){
+        if (map.get("description")!=null){
             document.setDescription(map.get("description")[0]);
         }
-        if (map.get("file")[0]!=null){
+        if (map.get("file")!=null){
             document.setPic(map.get("file")[0]);
+        }
+        if (map.get("job")!=null){
+            document.setJob(map.get("job")[0]);
+        }
+        if (map.get("hobby")!=null){
+            document.setHobby(map.get("hobby")[0]);
+        }
+        if (map.get("age")!=null){
+            document.setAge(Integer.valueOf(map.get("age")[0]));
+        }
+        if (map.get("skill")!=null){
+            document.setSkill(map.get("skill")[0]);
+        }
+        if (map.get("wx")!=null){
+            document.setWx(map.get("wx")[0]);
+        }
+        if (map.get("phone")!=null){
+            document.setPhone(map.get("phone")[0]);
+        }
+        if (map.get("email")!=null){
+            document.setEmail(map.get("email")[0]);
+        }
+        if (map.get("qq")!=null){
+            document.setQq(Integer.valueOf(map.get("qq")[0]));
         }
         document.setTitle(map.get("title")[0]);
         document.setUid(1);

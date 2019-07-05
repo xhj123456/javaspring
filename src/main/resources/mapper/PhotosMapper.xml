@@ -7,6 +7,18 @@
         insert into photos(title,pic,date,addr,cid,uid)
         values (#{title},#{pic},#{date},#{addr},#{cid},#{uid})
     </insert>
+    <update id="updatePhotos">
+        update photos set title=#{title},pic=#{pic},date=#{date},addr=#{addr} where id=#{id}
+    </update>
+    <delete id="delPhoto">
+        delete from photos where id=#{id}
+    </delete>
+    <delete id="delPhotosBatch">
+        delete from photos where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
     <select id="selectAll" resultMap="userInPhotos" resultType="com.pojo.Photos">
         select * from photos
         <where>
@@ -38,6 +50,9 @@
                 and date  &lt;= #{end}
             </if>
         </where>
+    </select>
+    <select id="getPhotoById" resultType="com.pojo.Photos">
+        select * from photos where id = #{id} limit 1
     </select>
     <resultMap id="userInPhotos" type="com.pojo.Photos" autoMapping="true">
         <!--        <id column="uid" property="uid"/>-->

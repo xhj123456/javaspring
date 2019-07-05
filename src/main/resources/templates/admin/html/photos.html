@@ -81,16 +81,7 @@
     </table>
     <div class="page">
         <div>
-            <!--          <a class="prev" th:href="@{/admin/document(page=${prev})}" th:if="${prev}>0">&lt;&lt;</a>-->
-            <!--          <a class="num" th:href="@{/admin/document(page=${pageList.key})}" th:each="pageList:${pages}" th:text="${pageList.key}" th:if="${pageList.key}!=${current}"></a>-->
-            <!--          <span class="current" th:each="pageList:${pages}" th:text="${pageList.key}" th:if="${pageList.key}==${current}"></span>-->
-            <!--          <a class="num" href="">1</a>-->
-            <!--          <a class="current">2</a>-->
-            <!--          <a class="" href="">3</a>-->
-            <!--          <a class="num" href="">489</a>-->
-
             <div id="demo0"></div>
-            <!--          <a class="next" th:href="@{/admin/document(page=${next})}" th:if="${next}<${end}"> >&gt;&gt; </a>-->
         </div>
     </div>
 
@@ -159,7 +150,7 @@
             console.log(id);
             $.ajax({
                 type:"post",
-                url:"del",
+                url:"delPhoto",
                 data:{ids:id},
                 dataType:'json',
                 success:function (data) {
@@ -189,7 +180,7 @@
             console.log(data);
             $.ajax({
                 type:"post",
-                url:"delBatch",
+                url:"delPhotosBatch",
                 data:{ids:data},
                 dataType:'json',
                 success:function (datas) {

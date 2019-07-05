@@ -25,114 +25,37 @@
     <div class="x-body">
         <form action="" method="post" class="layui-form layui-form-pane">
                 <input type="hidden" th:value="${cid}" name="cid">
+                <input type="hidden" th:value="${photosList.id}" name="id">
                 <div class="layui-form-item">
                     <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>文章标题
+                        <span class="x-red">*</span>图片标题
                     </label>
                     <div class="layui-input-inline" style="width: 300px;">
                         <input type="text" id="title" name="title" required lay-verify="required"
-                        autocomplete="off" class="layui-input">
+                        autocomplete="off" class="layui-input" th:value="${photosList.title}">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>文章封面
+                        <span class="x-red">*</span>图片
                     </label>
 <!--                    <div  class="layui-upload">-->
 					  <!--<button type="button" class="layui-btn" id="test1">上传图片</button>-->
 					  <button type="button" class="layui-btn layui-btn-normal" id="test8" name="pic">选择图片</button>
+                      <span id="pic" class="layui-inline layui-upload-choose" th:text="${photosList.pic}"></span>
 					  <button type="button" class="layui-btn" id="test9">开始上传</button>
-<!--					  <div class="layui-upload-list">-->
-<!--					    <img class="layui-upload-img" id="demo1">-->
-<!--					    <p id="demoText"></p>-->
-<!--					  </div>-->
+					  <div class="layui-upload-list">
+					    <img class="layui-upload-img" id="demo1">
+					    <p id="demoText"></p>
+					  </div>
                 </div>
-                <div class="layui-form-item" th:if="${cid==12}">
+                <div class="layui-form-item">
                     <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>年龄
+                        <span class="x-red">*</span>拍照地址
                     </label>
                     <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="age" name="age" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item" th:if="${cid==12}">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>职业
-                    </label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="job" name="job" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item" th:if="${cid==12}">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>爱好
-                    </label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="hobby" name="hobby" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item" th:if="${cid==13}">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>技能掌握度
-                    </label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="skill" name="skill" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item" th:if="${cid==14}">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>微信
-                    </label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="wx" name="wx" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item" th:if="${cid==14}">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>电话
-                    </label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="phone" name="phone" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item" th:if="${cid==14}">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>邮箱
-                    </label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="email" name="email" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item" th:if="${cid==14}">
-                    <label for="title" class="layui-form-label">
-                        <span class="x-red">*</span>qq
-                    </label>
-                    <div class="layui-input-inline" style="width: 300px;">
-                        <input type="text" id="qq" name="qq" required lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item layui-form-text" th:if="${pid!=8}">
-                    <label for="description" class="layui-form-label">
-                        	文章描述
-                    </label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="description" name="description" class="layui-textarea"></textarea>
-                    </div>
-                </div>
-                <div class="layui-form-item layui-form-text" th:if="${pid==1}">
-                    <label for="description" class="layui-form-label">
-                        	文章内容
-                    </label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="content" name="content" class="layui-textarea"></textarea>
+                        <input type="text" id="addr" name="addr" required lay-verify="required"
+                               autocomplete="off" class="layui-input" th:value="${photosList.addr}">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -141,7 +64,6 @@
             </form>
     </div>
     <script>
-//  	layui.use()
         layui.use(['form','layer','upload','layedit'], function(){
             $ = layui.jquery;
           var form = layui.form
@@ -215,17 +137,21 @@
           //监听提交
           form.on('submit(add)', function(data){
               data.field.content=layedit.getContent(index);
-              data.field.file=file;
+              if (file==""){
+                  data.field.file=$("#pic").html();
+              }else{
+                  data.field.file=file;
+              }
             console.log(data);
               $.ajax({
-                  url:"/admin/add",
+                  url:"/admin/editPhoto",
                   type:'post',
                   data:data.field,
                   dataType:'json',
                   success:function(datas){
                         if (datas.code==200){
                             //发异步，把数据提交给php
-                            layer.alert("增加成功", {icon: 6},function () {
+                            layer.alert("修改成功", {icon: 6},function () {
                                 // 获得frame索引
                                 var index = parent.layer.getFrameIndex(window.name);
                                 //关闭当前frame

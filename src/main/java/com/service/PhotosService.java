@@ -24,4 +24,8 @@ public interface PhotosService {
      */
     List<Photos> photos_list(String title, String start, String end, int begin, int num, int cid);
     int count(String title,String start,String end,int cid);
+    Photos photos_detail(Integer id);
+    Map<String,String> photos_edit(Photos photos);
+    Map<String,String> photos_del(Integer id);
+    Map<String,String> photos_delBatch(Integer[] ids);
 }

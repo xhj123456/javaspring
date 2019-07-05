@@ -33,18 +33,18 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form method="post" action="/admin/index" class="layui-form layui-col-md12 x-so">
+        <form method="post" action="/admin/leacots" class="layui-form layui-col-md12 x-so">
           <input class="layui-input" th:value="${data.get('start')}" placeholder="开始日" name="start" id="start">
           <input class="layui-input" th:value="${data.get('end')}" placeholder="截止日" name="end" id="end">
           <input type="hidden" th:value="${data.cid}" name="cid">
-          <input type="text" id="title" name="title"  th:value="${data.get('title')}" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+<!--          <input type="text" id="title" name="title"  th:value="${data.get('title')}" placeholder="请输入文章标题" autocomplete="off" class="layui-input">-->
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" th:onclick="'javascript:x_admin_show(\'添加用户\',\'./document-add.html?cid='+${document.map.cid}+'\');'"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：[[${document.count}]] 条</span>
+<!--        <button class="layui-btn" th:onclick="'javascript:x_admin_show(\'添加用户\',\'./document-add.html?cid='+${document.map.cid}+'\');'"><i class="layui-icon"></i>添加</button>-->
+        <span class="x-right" style="line-height:40px">共有数据：[[${message.count}]] 条</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -52,27 +52,27 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>文章标题</th>
-            <th>文章类别</th>
-            <th>添加时间</th>
-            <th>添加用户</th>
-            <th >操作</th>
+            <th>编号</th>
+            <th>内容</th>
+            <th>时间</th>
+            <th>用户</th>
+            <th>操作</th>
             </tr>
         </thead>
         <tbody>
-          <tr th:each="dacu:${document.documentList}">
+          <tr th:each="dacu:${message.messageList}">
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id='${dacu.getId()}'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id='${dacu.id}'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td th:text="${dacu.title}">${documentList.}</td>
-            <td th:text="${dacu.getCategory().getCname()}">老王:18925139194</td>
+            <td th:text="${dacu.id}">${documentList.}</td>
+            <td th:text="${dacu.message}">老王:18925139194</td>
             <td th:text="${dacu.date}">2017-08-17 18:22</td>
-            <td th:text="${dacu.user.getUsername()}">2017-08-17 18:22</td>
+<!--            <td th:text="${dacu.user.username}">2017-08-17 18:22</td>-->
             <td class="td-manage">
-              <a title="查看" th:onclick="'javascript:x_admin_show(\'修改用户\',\'./document-edit.html?id='+${dacu.getId()}+'&&cid='+${document.map.cid}+'\');'" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
-              </a>
-              <a title="删除" th:onclick="'javascript:member_del('+this+','+${dacu.getId()}+');'" href="javascript:;">
+<!--              <a title="查看" th:onclick="'javascript:x_admin_show(\'修改用户\',\'./document-edit.html?id='+${dacu.getId()}+'&&cid='+${document.map.cid}+'\');'" href="javascript:;">-->
+<!--                <i class="layui-icon">&#xe63c;</i>-->
+<!--              </a>-->
+              <a title="删除" th:onclick="'javascript:member_del('+this+','+${dacu.id}+');'" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -93,14 +93,14 @@
         //总页数低于页码总数
         laypage.render({
           elem: 'demo0'
-          ,count: [[${document.get('count')}]] //数据总数
+          ,count: [[${message.get('count')}]] //数据总数
           ,limit:[[${data.get('num')}]]
-          ,curr:[[${document.map.get('current')}]]
+          ,curr:[[${message.map.get('current')}]]
           ,jump: function(obj,first){
             if (!first){
               console.log(obj);
-              location.href="/admin/index?page="+obj.curr+"&&title="+$("#title").val()+
-                      "&&start="+$("#start").val()+"&&end="+$("#end").val()+"&&cid="+[[${data.get('cid')}]]
+              location.href="/admin/leacots?page="+obj.curr+ "&&start="+$("#start").val()+
+                      "&&end="+$("#end").val()+"&&cid="+[[${data.get('cid')}]]
             }
           }
         });

@@ -14,6 +14,27 @@
     </select>
     <select id="count" resultType="java.lang.Integer">
         select COUNT(*) from message
+        <where>
+            <if test="start !=null and start != ''">
+                and date >= #{start}
+            </if>
+            <if test="end !=null and end != ''">
+                and date  &lt;= #{end}
+            </if>
+        </where>
+    </select>
+    <select id="getAllMessage" resultMap="userInMsg" resultType="com.pojo.Message">
+        select * from message
+        <where>
+            <if test="start !=null and start != ''">
+                and date >= #{start}
+            </if>
+            <if test="end !=null and end != ''">
+                and date  &lt;= #{end}
+            </if>
+        </where>
+        order by id desc
+        limit #{begin},#{num}
     </select>
     <resultMap id="userInMsg" type="com.pojo.Message">
         <id column="uid" property="uid"/>

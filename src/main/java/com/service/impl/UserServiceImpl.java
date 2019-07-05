@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mapper.UserMapper;
 import com.pojo.User;
 import com.service.UserService;
+import com.util.Md5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     @Autowired
     HttpSession httpSession;
+    @Autowired
+    Md5 md5;
     @Override
     public JSONObject add(User user) {
         JSONObject jsonObject = new JSONObject();
@@ -48,7 +51,8 @@ public class UserServiceImpl implements UserService {
         //根据用户名获取用户信息
         User user = userMapper.getUserByUsername(request.getParameter("username"));
         if (user!=null){
-            if (user.getPassword()!=null && user.getPassword().equals(request.getParameter("pass_word"))){
+//            if (user.getPassword()!=null && user.getPassword().equals(request.getParameter("pass_word"))){
+            if (md5.verify(request.getParameter("pass_word"),user.getPassword())){
                 httpSession.setAttribute("user",user);
                 json.put("code","200");
                 json.put("msg","登陆成功");

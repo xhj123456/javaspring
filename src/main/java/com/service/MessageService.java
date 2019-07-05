@@ -24,4 +24,6 @@ public interface MessageService {
      * @return
      */
     int getCount();
+    int getCount(String start,String end,int did);
+    List<Message> message_list(String start,String end,int begin,int num,int did);
 }

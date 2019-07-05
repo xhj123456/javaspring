@@ -33,4 +33,8 @@ public interface PhotosMapper {
      * @return
      */
     int getCount(String title,String start,String end,int cid);
+    Photos getPhotoById(Integer id);
+    int updatePhotos(Photos photos);
+    int delPhoto(Integer id);
+    int delPhotosBatch(Integer[] ids);
 }

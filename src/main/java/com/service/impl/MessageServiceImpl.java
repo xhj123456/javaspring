@@ -58,4 +58,14 @@ public class MessageServiceImpl implements MessageService {
     public int getCount() {
         return messageMapper.count();
     }
+
+    @Override
+    public int getCount(String start,String end, int did) {
+        return messageMapper.count(start,end,did);
+    }
+
+    @Override
+    public List<Message> message_list(String start, String end, int begin, int num,int did) {
+        return messageMapper.getAllMessage(start,end,begin,num,did);
+    }
 }

@@ -67,7 +67,7 @@
             <td th:text="${dacu.id}">${documentList.}</td>
             <td th:text="${dacu.message}">老王:18925139194</td>
             <td th:text="${dacu.date}">2017-08-17 18:22</td>
-<!--            <td th:text="${dacu.user.username}">2017-08-17 18:22</td>-->
+            <td th:text="${dacu.user.username}">2017-08-17 18:22</td>
             <td class="td-manage">
 <!--              <a title="查看" th:onclick="'javascript:x_admin_show(\'修改用户\',\'./document-edit.html?id='+${dacu.getId()}+'&&cid='+${document.map.cid}+'\');'" href="javascript:;">-->
 <!--                <i class="layui-icon">&#xe63c;</i>-->
@@ -150,7 +150,7 @@
             console.log(id);
             $.ajax({
               type:"post",
-              url:"del",
+              url:"delLeacot",
               data:{ids:id},
               dataType:'json',
               success:function (data) {
@@ -180,14 +180,15 @@
           console.log(data);
           $.ajax({
             type:"post",
-            url:"delBatch",
+            url:"delLeacotBatch",
             data:{ids:data},
             dataType:'json',
             success:function (datas) {
               if (datas.code==200){
                 //捉到所有被选中的，发异步进行删除
                 layer.msg(datas.msg, {icon: 1});
-                $(".layui-form-checked").not('.header').parents('tr').remove();
+                // $(".layui-form-checked").not('.header').parents('tr').remove();
+                location.href="/admin/leacots?cid=10";
               }else {
                 layer.msg(datas.msg, {icon: 2});
                 return false;

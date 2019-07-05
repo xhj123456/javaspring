@@ -20,4 +20,11 @@ public interface MessageMapper {
      * @return
      */
     List<Message> getAllMessage(String start,String end,int begin,int num,int did);
+    /**
+     * 删除一篇文章
+     * @param id 文章id
+     * @return
+     */
+    int deleteMessage(int id);
+    int deleteMessages(Integer[] ids);
 }

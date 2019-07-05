@@ -26,4 +26,6 @@ public interface MessageService {
     int getCount();
     int getCount(String start,String end,int did);
     List<Message> message_list(String start,String end,int begin,int num,int did);
+    Map<String,String> message_del(int id);
+    Map<String,String> message_dels(Integer[] ids);
 }

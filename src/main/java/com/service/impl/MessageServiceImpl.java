@@ -68,4 +68,32 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> message_list(String start, String end, int begin, int num,int did) {
         return messageMapper.getAllMessage(start,end,begin,num,did);
     }
+
+    @Override
+    public Map<String, String> message_del(int id) {
+        int i = messageMapper.deleteMessage(id);
+        Map<String,String> map = new HashMap<String, String>();
+        if (i>0){
+            map.put("code","200");
+            map.put("msg","删除成功");
+        }else {
+            map.put("code","0");
+            map.put("msg","删除失败");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, String> message_dels(Integer[] ids) {
+        int i = messageMapper.deleteMessages(ids);
+        Map<String,String> map = new HashMap<String, String>();
+        if (i>0){
+            map.put("code","200");
+            map.put("msg","删除成功");
+        }else {
+            map.put("code","0");
+            map.put("msg","删除失败");
+        }
+        return map;
+    }
 }

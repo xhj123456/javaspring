@@ -22,10 +22,10 @@ public class SpringbootMybatisApplicationTests {
     }
 
 }
-class Person{
-        static int arr[] = new int[10];
-        public static void main(String a[]) {
-            int i=0;
-            System.out.println(i);
-        }
-}
+//class Person{
+//        static int arr[] = new int[10];
+//        public static void main(String a[]) {
+//            int i=0;
+//            System.out.println(i);
+//        }
+//}

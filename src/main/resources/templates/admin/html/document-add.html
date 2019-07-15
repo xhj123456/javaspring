@@ -47,7 +47,23 @@
 <!--					    <p id="demoText"></p>-->
 <!--					  </div>-->
                 </div>
-                <div class="layui-form-item" th:if="${cid==12}">
+<!--            多图上传-->
+            <div class="layui-form-item" th:if="${cid==11}">
+                <label for="title" class="layui-form-label">
+                    <span class="x-red">*</span>微语图片
+                </label>
+
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="test2">多图片上传</button>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                        预览图：
+                        <div class="layui-upload-list" id="demo2"></div>
+                    </blockquote>
+                </div>
+            </div>
+
+
+            <div class="layui-form-item" th:if="${cid==12}">
                     <label for="title" class="layui-form-label">
                         <span class="x-red">*</span>年龄
                     </label>
@@ -171,7 +187,24 @@
                   }
 		    }
 		  });
-        //普通图片上传
+            //多图片上传
+            upload.render({
+                elem: '#test2'
+                ,url: '/admin/uploads/'
+                ,multiple: true
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    });
+                }
+                ,done: function(res){
+                    console.log(res);
+                    //上传完毕
+                }
+            });
+
+            //普通图片上传
 		  var uploadInst = upload.render({
 		    elem: '#test1'
 		    ,url: '/upload/'

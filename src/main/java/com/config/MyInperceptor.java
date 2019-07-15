@@ -11,7 +11,7 @@ public class MyInperceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.debug("uri:{}",request.getRequestURI());
-        if ("/".equals(request.getRequestURI())){
+        if ("/".equals(request.getRequestURI())||"".equals(request.getRequestURI())){
             request.getRequestDispatcher("/index").forward(request,response);//转发
         }
         return true;
